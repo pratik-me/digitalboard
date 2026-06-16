@@ -4,13 +4,12 @@ import { useApiMutation } from "@/app/hooks/useApiMutation";
 import { Button } from "@/components/ui/button";
 import { api } from "@/convex/_generated/api";
 import { useOrganization, useUser } from "@clerk/react";
-import { useMutation } from "convex/react";
 import Image from "next/image";
 
 const EmptyBoards = () => {
-  const {mutate, pending} = useApiMutation(api.board.create);
+  const { mutate, pending } = useApiMutation(api.board.create);
   const { organization } = useOrganization();
-  const {user} = useUser();
+  const { user } = useUser();
 
   const handleClick = () => {
     if (!organization) throw new Error("No organization found!");
