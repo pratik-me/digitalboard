@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Star } from "lucide-react";  
+import React from "react";
 
 interface FooterProps {
   isFavourite: boolean;
@@ -19,6 +20,12 @@ const Footer = ({
   onClick,
   disabled,
 }: FooterProps) => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.stopPropagation();
+    event.preventDefault();
+
+    onClick();
+  }
   return (
     <div className="relative bg-white p-3">
       <p className="text-[13px] truncate max-w-[calc(100%-24px)] ">{title}</p>
@@ -27,7 +34,7 @@ const Footer = ({
       </p>
       <Button
         disabled={disabled}
-        onClick={onClick}
+        onClick={handleClick}
         variant={"ghost"}
         className={cn(
           "absolute top-3 right-3 text-muted-foreground hover:text-blue-600 transition",

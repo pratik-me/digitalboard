@@ -1,6 +1,6 @@
 "use client";
 
-import { Link2, Trash2 } from "lucide-react";
+import { Link2, Pencil, Trash2 } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,8 +10,9 @@ import {
 import { toast } from "sonner";
 import { useApiMutation } from "@/app/hooks/useApiMutation";
 import { api } from "@/convex/_generated/api";
-import { ConfirmModal } from "./confirm-modal";
+import { ConfirmModal } from "./modals/confirm-modal";
 import { Button } from "./ui/button";
+import { useRenameModal } from "@/store/use-rename-modal";
 
 interface ActionsProps {
   children: React.ReactNode;
@@ -28,6 +29,7 @@ export const Actions = ({
   id,
   title,
 }: ActionsProps) => {
+  const {onOpen} = useRenameModal();
   const { mutate, pending } = useApiMutation(api.board.remove);
   const onCopyLink = () => {
     navigator.clipboard
@@ -53,6 +55,12 @@ export const Actions = ({
           <Link2 className="size-4 mr-2" />
           Copy board link
         </DropdownMenuItem>
+        <DropdownMenuItem className="p-3 cursor-pointer" onClick={() => onOpen(id, title)}>
+          <Pencil className="size-4 mr-2" />
+          Rename
+        </DropdownMenuItem>
+
+        //TODO: Change Delete Modal from Button to DropdownMenuItem to close the dropdownMenu when any action is performed. 
         <ConfirmModal
           header="Delete board?"
           description="This will delete the board and all of its contents."
