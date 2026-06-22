@@ -5,6 +5,7 @@ import { favourite } from "./board";
 export const get = query({
     args: {
         orgId: v.string(),
+        search: v.optional(v.string())
     },
     handler: async (ctx, args) => {
         const identity = await ctx.auth.getUserIdentity();

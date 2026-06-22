@@ -33,6 +33,11 @@ export const remove = mutation({
     handler: async (ctx, args) => {
         const identity = await ctx.auth.getUserIdentity();
         if (!identity) throw new Error("Unauthorized");
+        const userId = identity.subject;
+        const existingFavourite = await ctx.db.query("userFavourites").withIndex("by_user_board", q => (
+            q.eq("userId", userId).eq("boardId", args.id)
+        )).unique();
+        if(existingFavourite) await ctx.db.delete(existingFavourite._id);
         await ctx.db.delete(args.id)
     }
 });
@@ -72,13 +77,13 @@ export const favourite = mutation({
 
         const existingFavourite = await ctx.db
             .query("userFavourites")
-            .withIndex("by_user_board_org", (q) => 
+            .withIndex("by_user_board_org", (q) =>
                 q.eq("userId", args.userId)
-                .eq("boardId", board._id)
-                .eq("orgId", args.orgId)
-        ).unique();
+                    .eq("boardId", board._id)
+                    .eq("orgId", args.orgId)
+            ).unique();
 
-        if(existingFavourite) throw new Error("Board already favourited");
+        if (existingFavourite) throw new Error("Board already favourited");
 
         await ctx.db.insert("userFavourites", {
             userId: args.userId,
@@ -104,12 +109,12 @@ export const unfavourite = mutation({
 
         const existingFavourite = await ctx.db
             .query("userFavourites")
-            .withIndex("by_user_board", (q) => 
+            .withIndex("by_user_board", (q) =>
                 q.eq("userId", args.userId)
-                .eq("boardId", board._id)          // To delete we don't need orgId to mention
-        ).unique();
+                    .eq("boardId", board._id)          // To delete we don't need orgId to mention
+            ).unique();
 
-        if(!existingFavourite) throw new Error("Favourited board not found");
+        if (!existingFavourite) throw new Error("Favourited board not found");
 
         await ctx.db.delete(existingFavourite._id);
 
