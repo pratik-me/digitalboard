@@ -48,3 +48,4 @@ export const get = query({
         return boardsWithFavouriteRelation;
     }
 })
+

@@ -14,6 +14,15 @@ importers:
       '@clerk/react':
         specifier: ^6.7.3
         version: 6.7.3(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@liveblocks/client':
+        specifier: ^3.20.0
+        version: 3.20.0(@types/json-schema@7.0.15)
+      '@liveblocks/node':
+        specifier: ^3.20.0
+        version: 3.20.0(@types/json-schema@7.0.15)
+      '@liveblocks/react':
+        specifier: ^3.20.0
+        version: 3.20.0(@types/json-schema@7.0.15)(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react@19.2.4)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -729,6 +738,29 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
+
+  '@liveblocks/client@3.20.0':
+    resolution: {integrity: sha512-5W8xbDbHGV3HKSgFlC2fJq7b44GCULEA+stN6M6r+NJY/VRrWf9AAwYYHRqMW9Tjy6ELoe+/jD/93EV4CaROhQ==}
+
+  '@liveblocks/core@3.20.0':
+    resolution: {integrity: sha512-zi3GeKcVSKMeGG16oq6zB7OXaRujDJdhhO0z/NBggIYZBWR9XzL3D/otd3Jnu+AFPl3LrjUtsWTei7NktIj3eg==}
+    peerDependencies:
+      '@types/json-schema': ^7
+
+  '@liveblocks/node@3.20.0':
+    resolution: {integrity: sha512-70+AdpSTgK7Fta/zsyiLP0T4TM0ibitGMekKhcj8msET/SghXNp4SqSq34iYBdWBBPJw54BdK9Z8rQF4+IN8sQ==}
+
+  '@liveblocks/react@3.20.0':
+    resolution: {integrity: sha512-BE3zw2SC90w3jZkOVs7lqaQpjn8g8VWGH5NWs4yNVxL1zmFuyJDcNHZmMtOz2piFXjiIqurNS8Qs/Lzn9U2KIw==}
+    peerDependencies:
+      '@types/react': ^18 || ^19
+      '@types/react-dom': ^18 || ^19
+      react: ^18 || ^19 || ^19.0.0-rc
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
 
   '@modelcontextprotocol/sdk@1.29.0':
     resolution: {integrity: sha512-zo37mZA9hJWpULgkRpowewez1y6ML5GsXJPY8FI0tBBCd77HEvza4jDqRKOXgHNn867PVGCyTdzqpz0izu5ZjQ==}
@@ -3102,6 +3134,11 @@ packages:
   magic-string@0.30.21:
     resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
 
+  marked@15.0.12:
+    resolution: {integrity: sha512-8dD6FusOQSrpv9Z1rdNMdlSgQOIP880DHqnohobOmYLElGEqAL/JvxvuxZO16r4HtjTlfPRDC1hbvxC9dPN2nA==}
+    engines: {node: '>= 18'}
+    hasBin: true
+
   math-intrinsics@1.1.0:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
     engines: {node: '>= 0.4'}
@@ -3206,6 +3243,15 @@ packages:
   node-exports-info@1.6.0:
     resolution: {integrity: sha512-pyFS63ptit/P5WqUkt+UUfe+4oevH+bFeIiPPdfb0pFeYEu/1ELnJu5l+5EcTKYL5M7zaAa7S8ddywgXypqKCw==}
     engines: {node: '>= 0.4'}
+
+  node-fetch@2.7.0:
+    resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
+    engines: {node: 4.x || >=6.0.0}
+    peerDependencies:
+      encoding: ^0.1.0
+    peerDependenciesMeta:
+      encoding:
+        optional: true
 
   node-fetch@3.3.2:
     resolution: {integrity: sha512-dRB78srN/l6gqWulah9SrxeYnxeddIG30+GOqK/9OlLVyLg3HPnr6SqOWTWOXKRwC2eGYCkZ59NNuSgvSrpgOA==}
@@ -3751,6 +3797,9 @@ packages:
     resolution: {integrity: sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA==}
     engines: {node: '>=0.6'}
 
+  tr46@0.0.3:
+    resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
+
   ts-api-utils@2.5.0:
     resolution: {integrity: sha512-OJ/ibxhPlqrMM0UiNHJ/0CKQkoKF243/AEmplt3qpRgkW8VG7IfOS41h7V8TjITqdByHzrjcS/2si+y4lIh8NA==}
     engines: {node: '>=18.12'}
@@ -3874,6 +3923,12 @@ packages:
   web-streams-polyfill@3.3.3:
     resolution: {integrity: sha512-d2JWLCivmZYTSIoge9MsgFCZrt571BikcWGYkjC1khllbTeDlGqZ2D8vD8E/lJa8WGWbb7Plm8/XJYV7IJHZZw==}
     engines: {node: '>= 8'}
+
+  webidl-conversions@3.0.1:
+    resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
+
+  whatwg-url@5.0.0:
+    resolution: {integrity: sha512-saE57nupxk6v3HY35+jzBwYa0rKSy0XR8JSxZPwgLr7ys0IBzhGviA1/TUGJLmSVqs8pb9AnvICXEuOHLprYTw==}
 
   which-boxed-primitive@1.1.1:
     resolution: {integrity: sha512-TbX3mj8n0odCBFVlY8AxkqcHASw3L60jIuF8jFP78az3C2YhmGvqbHBpAjTRH2/xqYunrJ9g1jSyjCjpoWzIAA==}
@@ -4540,6 +4595,38 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
+
+  '@liveblocks/client@3.20.0(@types/json-schema@7.0.15)':
+    dependencies:
+      '@liveblocks/core': 3.20.0(@types/json-schema@7.0.15)
+    transitivePeerDependencies:
+      - '@types/json-schema'
+
+  '@liveblocks/core@3.20.0(@types/json-schema@7.0.15)':
+    dependencies:
+      '@types/json-schema': 7.0.15
+
+  '@liveblocks/node@3.20.0(@types/json-schema@7.0.15)':
+    dependencies:
+      '@liveblocks/core': 3.20.0(@types/json-schema@7.0.15)
+      '@stablelib/base64': 1.0.1
+      fast-sha256: 1.3.0
+      marked: 15.0.12
+      node-fetch: 2.7.0
+    transitivePeerDependencies:
+      - '@types/json-schema'
+      - encoding
+
+  '@liveblocks/react@3.20.0(@types/json-schema@7.0.15)(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react@19.2.4)':
+    dependencies:
+      '@liveblocks/client': 3.20.0(@types/json-schema@7.0.15)
+      '@liveblocks/core': 3.20.0(@types/json-schema@7.0.15)
+      react: 19.2.4
+    optionalDependencies:
+      '@types/react': 19.2.17
+      '@types/react-dom': 19.2.3(@types/react@19.2.17)
+    transitivePeerDependencies:
+      - '@types/json-schema'
 
   '@modelcontextprotocol/sdk@1.29.0(zod@3.25.76)':
     dependencies:
@@ -7024,6 +7111,8 @@ snapshots:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.5
 
+  marked@15.0.12: {}
+
   math-intrinsics@1.1.0: {}
 
   media-typer@1.1.0: {}
@@ -7106,6 +7195,10 @@ snapshots:
       es-errors: 1.3.0
       object.entries: 1.1.9
       semver: 6.3.1
+
+  node-fetch@2.7.0:
+    dependencies:
+      whatwg-url: 5.0.0
 
   node-fetch@3.3.2:
     dependencies:
@@ -7825,6 +7918,8 @@ snapshots:
 
   toidentifier@1.0.1: {}
 
+  tr46@0.0.3: {}
+
   ts-api-utils@2.5.0(typescript@5.9.3):
     dependencies:
       typescript: 5.9.3
@@ -7981,6 +8076,13 @@ snapshots:
   vary@1.1.2: {}
 
   web-streams-polyfill@3.3.3: {}
+
+  webidl-conversions@3.0.1: {}
+
+  whatwg-url@5.0.0:
+    dependencies:
+      tr46: 0.0.3
+      webidl-conversions: 3.0.1
 
   which-boxed-primitive@1.1.1:
     dependencies:

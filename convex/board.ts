@@ -1,5 +1,5 @@
 import { v } from "convex/values"
-import { mutation } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 
 const images = [
     "/aleph-purple.png",
@@ -119,5 +119,14 @@ export const unfavourite = mutation({
         await ctx.db.delete(existingFavourite._id);
 
         return board;
+    },
+})
+
+export const get = query({
+    args: {
+        id: v.string(),
+    },
+    handler(ctx, args) {
+        return {orgId: args.id};
     },
 })
