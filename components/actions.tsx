@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { toast } from "sonner";
-import { useApiMutation } from "@/app/hooks/useApiMutation";
+import { useApiMutation } from "@/hooks/useApiMutation";
 import { api } from "@/convex/_generated/api";
 import { ConfirmModal } from "./modals/confirm-modal";
 import { Button } from "./ui/button";

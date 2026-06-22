@@ -1,6 +1,6 @@
 "use client";
 
-import { useApiMutation } from "@/app/hooks/useApiMutation";
+import { useApiMutation } from "@/hooks/useApiMutation";
 import { Button } from "@/components/ui/button";
 import { api } from "@/convex/_generated/api";
 import { useOrganization, useUser } from "@clerk/react";

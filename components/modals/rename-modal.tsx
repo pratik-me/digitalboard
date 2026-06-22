@@ -13,9 +13,10 @@ import {
 import React, { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { useApiMutation } from "@/app/hooks/useApiMutation";
+import { useApiMutation } from "@/hooks/useApiMutation";
 import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
+import { Id } from "@/convex/_generated/dataModel";
 
 export const RenameModal = () => {
   const { isOpen, onClose, initialValues } = useRenameModal();
@@ -29,7 +30,7 @@ export const RenameModal = () => {
   const handleSubmit: React.SubmitEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     mutate({
-        id: initialValues.id,
+        id: initialValues.id as Id<"boards">,
         title,
     }).then(() => {
         toast.success("Board renamed");

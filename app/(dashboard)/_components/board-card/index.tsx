@@ -9,7 +9,7 @@ import Footer from "./footer";
 import { Actions } from "@/components/actions";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
-import { useApiMutation } from "@/app/hooks/useApiMutation";
+import { useApiMutation } from "@/hooks/useApiMutation";
 import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
 import { Id } from "@/convex/_generated/dataModel";
