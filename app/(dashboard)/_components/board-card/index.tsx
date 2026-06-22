@@ -12,6 +12,7 @@ import { MoreHorizontal } from "lucide-react";
 import { useApiMutation } from "@/app/hooks/useApiMutation";
 import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
+import { Id } from "@/convex/_generated/dataModel";
 
 interface BoardCardProps {
   id: string;
@@ -35,6 +36,7 @@ const BoardCard = ({
   isFavourite,
 }: BoardCardProps) => {
   const { userId } = useAuth();
+  if (!userId) throw new Error("User not authorized");
   const authorLabel = userId === authorId ? "You" : authorName;
   const createdAtLabel = formatDistanceToNow(createdAt, { addSuffix: true });
 
@@ -47,9 +49,11 @@ const BoardCard = ({
 
   const toggleFavourite = () => {
     if (isFavourite)
-      onUnfavourite({ id }).catch((_) => toast.error("Failed to unfavourite"));
+      onUnfavourite({ id: id as Id<"boards">, userId }).catch((_) =>
+        toast.error("Failed to unfavourite")
+      );
     else
-      onFavourite({ id, orgId }).catch((_) =>
+      onFavourite({ id: id as Id<"boards">, orgId, userId }).catch((_) =>
         toast.error("Failed to favourite")
       );
   };
