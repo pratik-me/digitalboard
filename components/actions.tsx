@@ -13,6 +13,7 @@ import { api } from "@/convex/_generated/api";
 import { ConfirmModal } from "./modals/confirm-modal";
 import { Button } from "./ui/button";
 import { useRenameModal } from "@/store/use-rename-modal";
+import { Id } from "@/convex/_generated/dataModel";
 
 interface ActionsProps {
   children: React.ReactNode;
@@ -38,7 +39,7 @@ export const Actions = ({
       .catch(() => toast.error("Failed to copy link"));
   };
   const onDelete = () => {
-    mutate({ id })
+    mutate({ id: id as Id<"boards"> })
       .then(() => toast.success("Board delete"))
       .catch(() => toast.error("Failed to delete board"));
   };
@@ -60,7 +61,7 @@ export const Actions = ({
           Rename
         </DropdownMenuItem>
 
-        //TODO: Change Delete Modal from Button to DropdownMenuItem to close the dropdownMenu when any action is performed. 
+        {/* TODO: Change Delete Modal from Button to DropdownMenuItem to close the dropdownMenu when any action is performed.  */}
         <ConfirmModal
           header="Delete board?"
           description="This will delete the board and all of its contents."

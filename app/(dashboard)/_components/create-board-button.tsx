@@ -6,6 +6,7 @@ import { api } from "@/convex/_generated/api";
 import { cn } from "@/lib/utils";
 import { useUser } from "@clerk/react";
 import { Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 interface CreateBoardButtonProps {
@@ -14,6 +15,7 @@ interface CreateBoardButtonProps {
 }
 
 const CreateBoardButton = ({ orgId, disabled }: CreateBoardButtonProps) => {
+  const router = useRouter();
   const {user} = useUser();
   if(!user) throw new Error("Not authorized!");
   const {mutate, pending} = useApiMutation(api.board.create);
@@ -25,6 +27,7 @@ const CreateBoardButton = ({ orgId, disabled }: CreateBoardButtonProps) => {
       name: user.fullName || "Anonymous",
     }).then(id => {
       toast.success("Board Created!")
+      router.push(`/board/${id}`);
     }).catch(() => toast.error("Failed to create board"))
   }
   return (
