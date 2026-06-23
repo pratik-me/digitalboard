@@ -21,7 +21,7 @@ export const POST = async (request: Request) => {
     const { room } = await request.json();
     const board = await convex.query(api.board.get, { id: room })
 
-    if (board.orgId !== authorization.orgId) return new Response("Unauthorized", {status: 403});
+    if (board.orgId !== authorization.orgId) return new Response("Unauthorized", { status: 403 });
 
     const userInfo = {
         name: user.firstName || "Anonymous",
