@@ -16,8 +16,8 @@ interface BoardListProps {
 
 const BoardList = ({ orgId, query }: BoardListProps) => {
   const data = useQuery(api.boards.get, { orgId, ...query });
-  if (data === null) throw new Error("No board found in database!"); // If there's no data then data === null
-  if (data === undefined)                                            // If data is fetching then data === undefined
+  if (data === null) throw new Error("No board found in database!");   // If there's no data then data === null
+  if (data === undefined)                                              // If data is fetching then data === undefined
     return (
       <div>
         <h2 className="text-3xl">

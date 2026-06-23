@@ -124,9 +124,15 @@ export const unfavourite = mutation({
 
 export const get = query({
     args: {
-        id: v.string(),
+        id: v.id("boards"),
     },
-    handler(ctx, args) {
-        return {orgId: args.id};
+    handler: async(ctx, args) => {
+        const identity = ctx.auth.getUserIdentity();
+        if(!identity) throw new Error("Unauthorized");
+
+        const board = await ctx.db.get(args.id);
+        if(!board) throw new Error("Board not found");
+
+        return board;
     },
 })
