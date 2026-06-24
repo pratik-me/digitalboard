@@ -7,3 +7,5 @@ export const COLORS = [
     "#7C3AED",
     "#DB2777",
 ]
+
+export const ANONYMOUS = "Anonymous";

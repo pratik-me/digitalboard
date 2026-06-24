@@ -1,5 +1,6 @@
 
 import { api } from "@/convex/_generated/api"
+import { ANONYMOUS } from "@/lib/consts"
 import { auth, currentUser } from "@clerk/nextjs/server"
 import { Liveblocks } from "@liveblocks/node"
 import { ConvexHttpClient } from "convex/browser"
@@ -24,7 +25,7 @@ export const POST = async (request: Request) => {
     if (board.orgId !== authorization.orgId) return new Response("Unauthorized", { status: 403 });
 
     const userInfo = {
-        name: user.firstName || "Anonymous",
+        name: user.firstName || ANONYMOUS,
         picture: user.imageUrl,
     }
 

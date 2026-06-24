@@ -115,13 +115,15 @@ const Toolbar = ({
           label="Undo"
           icon={Undo2}
           onClick={undo}
-          isActive={!canUndo}
+          isActive={canUndo}
+          isDisabled={!canUndo}
         />
         <ToolButton
           label="Redo"
           icon={Redo2}
           onClick={redo}
-          isActive={!canRedo}
+          isActive={canRedo}
+          isDisabled={!canRedo}
         />
       </div>
     </div>

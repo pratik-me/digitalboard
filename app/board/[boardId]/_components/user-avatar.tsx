@@ -1,5 +1,6 @@
 import { Hint } from "@/components/hint";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ANONYMOUS } from "@/lib/consts";
 
 interface UserAvatarProps {
   src?: string;
@@ -15,7 +16,7 @@ export const UserAvatar = ({
   borderColor,
 }: UserAvatarProps) => {
   return (
-    <Hint label={name || "Anonymous"} side="bottom" sideOffset={15}>
+    <Hint label={name || ANONYMOUS} side="bottom" sideOffset={15}>
       <Avatar className="size-8 border-2" style={{ borderColor }}>
         <AvatarImage src={src} />
         <AvatarFallback className="text-xs font-semibold">

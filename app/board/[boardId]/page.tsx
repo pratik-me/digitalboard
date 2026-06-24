@@ -9,7 +9,7 @@ import { useParams } from "next/navigation";
 const BoardsPage = () => {
   const props = useParams() as {boardId: string,};
   return (
-    <LiveblocksProvider authEndpoint={"/api/liveblocks-auth"}>
+    <LiveblocksProvider authEndpoint={"/api/liveblocks-auth"} throttle={16}>
       <Room roomId={props.boardId} fallback={<Loading />}>
         <Canvas boardId={props.boardId} />
       </Room>

@@ -8,6 +8,7 @@ import { useUser } from "@clerk/react";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { ANONYMOUS } from "@/lib/consts";
 
 interface CreateBoardButtonProps {
   orgId: string;
@@ -24,7 +25,7 @@ const CreateBoardButton = ({ orgId, disabled }: CreateBoardButtonProps) => {
     mutate({
       orgId,
       title: "Untitled",
-      name: user.fullName || "Anonymous",
+      name: user.fullName || ANONYMOUS,
     }).then(id => {
       toast.success("Board Created!")
       router.push(`/board/${id}`);
