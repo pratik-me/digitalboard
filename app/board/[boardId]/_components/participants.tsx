@@ -15,6 +15,7 @@ const Participants = () => {
         {/* TODO: Use AvatarGroup and AvatarGroupCount instead of div */}
         {currentUser && (
           <UserAvatar
+            key={currentUser.connectionId}
             borderColor={connectionIdColor(currentUser.connectionId)}
             src={currentUser.info?.picture}
             name={`${currentUser.info?.name} (You)`}
@@ -24,6 +25,7 @@ const Participants = () => {
 
         {users.slice(0, MAX_SHOWN_USERS).map(({ connectionId, info }) => (
           <UserAvatar
+            key={connectionId}
             borderColor={connectionIdColor(connectionId)}
             src={info?.picture}
             name={info?.name}

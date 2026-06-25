@@ -1,4 +1,5 @@
 export const MAX_SHOWN_USERS = 2;
+export const MAX_LAYERS = 100;
 
 export const COLORS = [
     "#DC2626",

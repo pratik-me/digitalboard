@@ -3,6 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ANONYMOUS } from "@/lib/consts";
 
 interface UserAvatarProps {
+  key?: number
   src?: string;
   name?: string;
   fallback?: string;

@@ -5,7 +5,7 @@ import { memo } from "react";
 import { Cursor } from "./cursor";
 
 const Cursors = () => {
-    const user = useSelf();
+  const user = useSelf();
   const ids = useOthersConnectionIds();
   return (
     <>
