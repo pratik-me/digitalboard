@@ -28,6 +28,7 @@ import { MAX_LAYERS } from "@/lib/consts";
 import { nanoid } from "nanoid";
 import { LiveObject } from "@liveblocks/client";
 import { LayerPreview } from "./layer-preview";
+import { SelectionBox } from "./selection-box";
 
 const Canvas = ({ boardId }: { boardId: string }) => {
   const layerIds = useStorage((root) => root.layerIds);
@@ -101,10 +102,12 @@ const Canvas = ({ boardId }: { boardId: string }) => {
   );
 
   const selections = useOthersMapped(other => other.presence.selection);
-  
+
   const onLayerPointerDown = useMutation(({self, setMyPresence}, e: React.PointerEvent, layerId: string) => {
+    // Triggers when  user click on layer: pause liveblocks history, stop propagation and update storage (using setMyPresence) and canvasState to latest one.
+    // Don't do anything when state is Pencil or Inserting
     if(canvasState.mode === CanvasMode.Pencil || canvasState.mode === CanvasMode.Inserting) return;
-    
+
     history.pause();
     e.stopPropagation();
 
@@ -159,6 +162,8 @@ const Canvas = ({ boardId }: { boardId: string }) => {
               selectionColor={layerIdsToColorSelection[layerId]}
             />
           ))}
+
+          <SelectionBox onResizeHandlePointerDown={() => {}} />
           <CursorsPresence />
         </g>
       </svg>
