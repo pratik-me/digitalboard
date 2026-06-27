@@ -1,7 +1,8 @@
 import { useSelectionBounds } from "@/hooks/useSelectionBounds";
 import { Camera, Color } from "@/types/canvas";
-import { useSelf } from "@liveblocks/react/suspense";
+import { useMutation, useSelf } from "@liveblocks/react/suspense";
 import React, { Dispatch, memo, SetStateAction } from "react";
+import { ColorPicker } from "./color-picker";
 
 interface SelectionToolsProp {
   camera: Camera;
@@ -11,6 +12,13 @@ interface SelectionToolsProp {
 export const SelectionTools = memo(
   ({ camera, setLastUsedColor }: SelectionToolsProp) => {
     const selection = useSelf((me) => me.presence.selection);
+    const setFill = useMutation(({storage}, color: Color) => {
+      const liveLayers = storage.get("layers");
+      setLastUsedColor(color);
+      selection.forEach(id => {
+        liveLayers.get(id)?.set("color", color)
+      })
+    }, [])
     const selectionBounds = useSelectionBounds();
     if (!selectionBounds) return null;
     const x = selectionBounds.width / 2 + selectionBounds.x + camera.x;
@@ -22,7 +30,7 @@ export const SelectionTools = memo(
           transform: `translate(calc(${x}px - 50%), calc(${y - 16}px - 100%))`,
         }}
       >
-        Selection Tools
+        <ColorPicker onChange={setFill} />
       </div>
     );
   }

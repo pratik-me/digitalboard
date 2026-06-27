@@ -81,6 +81,7 @@ const Canvas = ({ boardId }: { boardId: string }) => {
     },
     [lastUsedColor]
   );
+
   const unselectLayers = useMutation(({ self, setMyPresence }) => {
     if (self.presence.selection.length > 0)
       setMyPresence({ selection: [] }, { addToHistory: true });
