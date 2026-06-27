@@ -3,7 +3,7 @@
 import { LayerType } from "@/types/canvas";
 import { useStorage } from "@liveblocks/react/suspense";
 import { memo } from "react";
-import { Rectangle } from "./Layers/Rectangle";
+import { Rectangle } from "./Layers/rectangle";
 
 interface LayerPreviewProps {
   id: string;
@@ -11,7 +11,7 @@ interface LayerPreviewProps {
   selectionColor?: string;
 }
 
-export const LayerPreview = memo(
+export const  LayerPreview = memo(
   ({ id, onLayerPointerDown, selectionColor }: LayerPreviewProps) => {
     const layer = useStorage((root) => root.layers?.[id]);
 

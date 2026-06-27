@@ -18,7 +18,7 @@ export const Rectangle = ({
   return (
     <rect
       className="drop-shadow-md"
-      onPointerMove={(e: React.PointerEvent) => onPointerDown(e, id)}
+      onPointerDown={(e: React.PointerEvent) => onPointerDown(e, id)}
       style={{ transform: `translate(${x}px, ${y}px)` }}
       x={0}
       y={0}

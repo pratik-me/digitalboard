@@ -35,7 +35,7 @@ export const SelectionBox = memo(
         {isShowingHandles && (
           <>
             <rect
-              className="fill-white stroke-1 stroke-blue-100"
+              className="fill-white stroke-1 stroke-blue-500"
               x={0}
               y={0}
               style={{
@@ -53,7 +53,7 @@ export const SelectionBox = memo(
             />
 
             <rect
-              className="fill-white stroke-1 stroke-blue-100"
+              className="fill-white stroke-1 stroke-blue-500"
               x={0}
               y={0}
               style={{
@@ -71,7 +71,7 @@ export const SelectionBox = memo(
             />
 
             <rect
-              className="fill-white stroke-1 stroke-blue-100"
+              className="fill-white stroke-1 stroke-blue-500"
               x={0}
               y={0}
               style={{
@@ -89,7 +89,7 @@ export const SelectionBox = memo(
             />
 
             <rect
-              className="fill-white stroke-1 stroke-blue-100"
+              className="fill-white stroke-1 stroke-blue-500"
               x={0}
               y={0}
               style={{
@@ -107,7 +107,7 @@ export const SelectionBox = memo(
             />
 
             <rect
-              className="fill-white stroke-1 stroke-blue-100"
+              className="fill-white stroke-1 stroke-blue-500"
               x={0}
               y={0}
               style={{
@@ -125,7 +125,7 @@ export const SelectionBox = memo(
             />
 
             <rect
-              className="fill-white stroke-1 stroke-blue-100"
+              className="fill-white stroke-1 stroke-blue-500"
               x={0}
               y={0}
               style={{
@@ -143,7 +143,7 @@ export const SelectionBox = memo(
             />
 
             <rect
-              className="fill-white stroke-1 stroke-blue-100"
+              className="fill-white stroke-1 stroke-blue-500"
               x={0}
               y={0}
               style={{
@@ -161,7 +161,7 @@ export const SelectionBox = memo(
             />
 
             <rect
-              className="fill-white stroke-1 stroke-blue-100"
+              className="fill-white stroke-1 stroke-blue-500"
               x={0}
               y={0}
               style={{

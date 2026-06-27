@@ -35,6 +35,7 @@ import { nanoid } from "nanoid";
 import { LiveObject } from "@liveblocks/client";
 import { LayerPreview } from "./layer-preview";
 import { SelectionBox } from "./selection-box";
+import { SelectionTools } from "./selection-tools";
 
 const Canvas = ({ boardId }: { boardId: string }) => {
   const layerIds = useStorage((root) => root.layerIds);
@@ -42,6 +43,7 @@ const Canvas = ({ boardId }: { boardId: string }) => {
   const [canvasState, setCanvasState] = useState<CanvasState>({
     mode: CanvasMode.None,
   });
+  console.log(canvasState.mode);
   const [lastUsedColor, setLastUsedColor] = useState<Color>({
     r: 0,
     g: 0,
@@ -137,12 +139,9 @@ const Canvas = ({ boardId }: { boardId: string }) => {
     [canvasState, resizeSelectedLayer, camera]
   );
 
-  const onPointerLeave = useMutation(
-    ({ setMyPresence }, e: React.PointerEvent) => {
-      setMyPresence({ cursor: null });
-    },
-    []
-  );
+  const onPointerLeave = useMutation(({ setMyPresence }) => {
+    setMyPresence({ cursor: null });
+  }, []);
 
   const onPointerUp = useMutation(
     ({}, e) => {
@@ -169,8 +168,6 @@ const Canvas = ({ boardId }: { boardId: string }) => {
     },
     [camera, canvasState.mode, setCanvasState]
   );
-
-  const selections = useOthersMapped((other) => other.presence.selection);
 
   const onLayerPointerDown = useMutation(
     ({ self, setMyPresence }, e: React.PointerEvent, layerId: string) => {
@@ -201,6 +198,7 @@ const Canvas = ({ boardId }: { boardId: string }) => {
     [history]
   );
 
+  const selections = useOthersMapped((other) => other.presence.selection);
   const layerIdsToColorSelection = useMemo(() => {
     const layerIdsToColorSelection: Record<string, string> = {};
 
@@ -230,6 +228,8 @@ const Canvas = ({ boardId }: { boardId: string }) => {
         undo={history.undo}
         redo={history.redo}
       />
+
+      <SelectionTools camera={camera} setLastUsedColor={setLastUsedColor} />
 
       <svg
         className="h-screen w-screen"
