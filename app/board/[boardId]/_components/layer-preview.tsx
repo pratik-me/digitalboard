@@ -4,6 +4,7 @@ import { LayerType } from "@/types/canvas";
 import { useStorage } from "@liveblocks/react/suspense";
 import { memo } from "react";
 import { Rectangle } from "./Layers/rectangle";
+import Ellipse from "./Layers/ellipse";
 
 interface LayerPreviewProps {
   id: string;
@@ -11,7 +12,7 @@ interface LayerPreviewProps {
   selectionColor?: string;
 }
 
-export const  LayerPreview = memo(
+export const LayerPreview = memo(
   ({ id, onLayerPointerDown, selectionColor }: LayerPreviewProps) => {
     const layer = useStorage((root) => root.layers?.[id]);
 
@@ -19,7 +20,22 @@ export const  LayerPreview = memo(
     switch (layer.type) {
       case LayerType.Rectangle:
         return (
-          <Rectangle id={id} layer={layer} onPointerDown={onLayerPointerDown} />
+          <Rectangle
+            id={id}
+            layer={layer}
+            onPointerDown={onLayerPointerDown}
+            selectionColor={selectionColor}
+          />
+        );
+
+      case LayerType.Ellipse:
+        return (
+          <Ellipse
+            id={id}
+            layer={layer}
+            onPointerDown={onLayerPointerDown}
+            selectionColor={selectionColor}
+          />
         );
 
       default:

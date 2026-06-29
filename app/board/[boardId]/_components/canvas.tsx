@@ -44,7 +44,6 @@ const Canvas = ({ boardId }: { boardId: string }) => {
   const [canvasState, setCanvasState] = useState<CanvasState>({
     mode: CanvasMode.None,
   });
-  console.log(canvasState.mode);
   const [lastUsedColor, setLastUsedColor] = useState<Color>({
     r: 0,
     g: 0,
