@@ -3,7 +3,7 @@
 import Info from "./info";
 import Participants from "./participants";
 import Toolbar from "./toolbar";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Camera,
   CanvasMode,
@@ -39,6 +39,8 @@ import { LayerPreview } from "./layer-preview";
 import { SelectionBox } from "./selection-box";
 import { SelectionTools } from "./selection-tools";
 import { Path } from "./Layers/path";
+import { useDisableScrollBounce } from "@/hooks/use-disable-scroll-bounce";
+import { useDeleteLayers } from "@/hooks/use-delete-layers";
 
 const Canvas = ({ boardId }: { boardId: string }) => {
   const layerIds = useStorage((root) => root.layerIds);
@@ -54,6 +56,8 @@ const Canvas = ({ boardId }: { boardId: string }) => {
     b: 0,
   });
 
+  useDisableScrollBounce();
+  const deleteLayers = useDeleteLayers();
   const history = useHistory();
   const canUndo = useCanUndo();
   const canRedo = useCanRedo();
@@ -333,6 +337,28 @@ const Canvas = ({ boardId }: { boardId: string }) => {
   const onWheel = useCallback((e: React.WheelEvent) => {
     setCamera((camera) => ({ x: camera.x - e.deltaX, y: camera.y - e.deltaY }));
   }, []);
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      // TODO: Add listeners for each layerType
+      // TODO: Add listener for deleting layers if they are not Note or Text
+      switch (e.key) {
+        case "z": {
+          if(e.ctrlKey || e.metaKey) {
+            if(e.shiftKey) history.redo();
+            else history.undo();
+            break;
+          }
+        }
+      }
+    }
+
+    document.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown)
+    }
+  }, [deleteLayers, history])
 
   return (
     <main className="h-screen w-full relative bg-neutral-100 touch-none">
