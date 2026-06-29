@@ -6,6 +6,8 @@ import { ConvexClientProvider } from "@/providers/convex-client-provider";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
 import { ModalProvider } from "@/providers/modal-provider";
+import { Suspense } from "react";
+import Loading from "@/components/auth/Loading";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -45,11 +47,13 @@ export default function RootLayout({
       )}
     >
       <body className={cn("min-h-full flex flex-col", inter.className)}>
-        <ConvexClientProvider>
-          <Toaster />
-          <ModalProvider />
-          {children}
-        </ConvexClientProvider>
+        <Suspense fallback={<Loading />}>
+          <ConvexClientProvider>
+            <Toaster />
+            <ModalProvider />
+            {children}
+          </ConvexClientProvider>
+        </Suspense>
       </body>
     </html>
   );
