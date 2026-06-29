@@ -66,7 +66,7 @@ export const findIntersectingLayerswithRectangle = (layerIds: readonly string[],
 
     const {x, y, height, width} = layer;
     if(
-      rect.x + rect.height > x &&
+      rect.x + rect.width > x &&
       rect.x < x + width &&
       rect.y + rect.height > y &&
       rect.y < y + height
