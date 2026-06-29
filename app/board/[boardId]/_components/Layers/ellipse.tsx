@@ -10,7 +10,7 @@ interface EllipseProps {
   selectionColor?: string;
 }
 
-const Ellipse = ({
+export const Ellipse = ({
   id,
   layer,
   onPointerDown,
@@ -31,5 +31,3 @@ const Ellipse = ({
     />
   );
 };
-
-export default Ellipse;
