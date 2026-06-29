@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { COLORS } from "./consts"
-import { Camera, Color, Layer, Point, Side, XYHW } from "@/types/canvas"
+import { Camera, Color, Layer, LayerType, PathLayer, Point, Side, XYHW } from "@/types/canvas"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -30,19 +30,19 @@ export const resizeBounds = (bounds: XYHW, corner: Side, point: Point) => {
     height: bounds.height,
   }
 
-  if((corner & Side.Left) === Side.Left) {
+  if ((corner & Side.Left) === Side.Left) {
     result.x = Math.min(point.x, bounds.x + bounds.width);
     result.width = Math.abs(bounds.x + bounds.width - point.x)
   }
-  if((corner & Side.Right) === Side.Right) {
+  if ((corner & Side.Right) === Side.Right) {
     result.x = Math.min(point.x, bounds.x);
     result.width = Math.abs(point.x - bounds.x)
   }
-  if((corner & Side.Top) === Side.Top) {
+  if ((corner & Side.Top) === Side.Top) {
     result.y = Math.min(point.y, bounds.y + bounds.height);
     result.height = Math.abs(bounds.y + bounds.height - point.y);
   }
-  if((corner & Side.Bottom) === Side.Bottom) {
+  if ((corner & Side.Bottom) === Side.Bottom) {
     result.y = Math.min(point.y, bounds.y);
     result.height = Math.abs(point.y - bounds.y)
   }
@@ -60,12 +60,12 @@ export const findIntersectingLayerswithRectangle = (layerIds: readonly string[],
 
   const ids = [];
 
-  for(const layerId of layerIds) {
+  for (const layerId of layerIds) {
     const layer = layers[layerId];
-    if(layer == null) continue;
+    if (layer == null) continue;
 
-    const {x, y, height, width} = layer;
-    if(
+    const { x, y, height, width } = layer;
+    if (
       rect.x + rect.width > x &&
       rect.x < x + width &&
       rect.y + rect.height > y &&
@@ -79,14 +79,54 @@ export const findIntersectingLayerswithRectangle = (layerIds: readonly string[],
 export const calculateFontSize = (width: number, height: number) => {
   const maxFontSize = 96;
   const scaleFactor = 0.15;
-  const fontSizeBasedOnHeight = height * scaleFactor; 
+  const fontSizeBasedOnHeight = height * scaleFactor;
   const fontSizeBasedOnWidth = width * scaleFactor;
-  
+
   return Math.min(fontSizeBasedOnHeight, fontSizeBasedOnWidth, maxFontSize);
 }
 
 export const getContrastingTextColor = (color: Color) => {
   const luminance = 0.299 * color.r + 0.587 * color.g + 0.114 * color.b;
 
-  return luminance > 182 ? "black": "white";
+  return luminance > 182 ? "black" : "white";
+}
+
+export const penPointsToPathLayer = (points: number[][], color: Color): PathLayer => {
+  if (points.length < 2) throw new Error("Transformation can not be done with less than 2 points");
+  let left = Number.POSITIVE_INFINITY;
+  let right = Number.NEGATIVE_INFINITY;
+  let top = Number.POSITIVE_INFINITY;
+  let bottom = Number.NEGATIVE_INFINITY;
+
+  for (const point of points) {
+    const [x, y] = point;
+
+    if (left > x) left = x;
+    if (top > y) top = y;
+    if (right < x) right = x;
+    if (bottom < y) bottom = y;
+  }
+
+  return {
+    type: LayerType.Path,
+    x: left,
+    y: top,
+    width: right - left,
+    height: bottom - top,
+    color,
+    points: points.map(([x, y, pressure]) => [x - left, y - top, pressure])
+  }
+}
+
+export const  getSvgPathFromStroke = (stroke: number[][]) => {   // AI generated
+  if(!stroke.length) return "";
+
+  const d = stroke.reduce((acc, [x0, y0], i, arr) => {
+    const [x1, y1] = arr[(i + 1) % arr.length];
+    acc.push(x0, y0, (x0 + x1) / 2, (y0 + y1) / 2);
+    return acc;
+  }, ["M", ...stroke[0], "Q"]);
+
+  d.push("Z");
+  return d.join(" ");
 }
