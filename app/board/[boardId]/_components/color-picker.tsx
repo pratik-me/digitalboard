@@ -31,11 +31,11 @@ interface ColorButtonProps {
 const ColorButton = ({ onClick, color }: ColorButtonProps) => {
   return (
     <Button
-      className="size-8 items-center flex justify-center hover:opacity-75 transition"
+      className="size-8 items-center flex justify-center p-0 hover:opacity-75 transition"
       onClick={() => onClick(color)}
     >
       <div
-        className="size-8 rounded-md border border-neutral-300"
+        className="size-8 rounded-md border hover:border-neutral-600 transition"
         style={{ background: colorToCss(color) }}
       ></div>
     </Button>

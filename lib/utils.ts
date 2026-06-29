@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { COLORS } from "./consts"
-import { Camera, Color, Point, Side, XYHW } from "@/types/canvas"
+import { Camera, Color, Layer, Point, Side, XYHW } from "@/types/canvas"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -48,4 +48,30 @@ export const resizeBounds = (bounds: XYHW, corner: Side, point: Point) => {
   }
 
   return result;
+}
+
+export const findIntersectingLayerswithRectangle = (layerIds: readonly string[], layers: Record<string, Layer>, a: Point, b: Point) => {
+  const rect = {
+    x: Math.min(a.x, b.x),
+    y: Math.min(a.y, b.y),
+    width: Math.abs(a.x - b.x),
+    height: Math.abs(a.y - b.y),
+  }
+
+  const ids = [];
+
+  for(const layerId of layerIds) {
+    const layer = layers[layerId];
+    if(layer == null) continue;
+
+    const {x, y, height, width} = layer;
+    if(
+      rect.x + rect.height > x &&
+      rect.x < x + width &&
+      rect.y + rect.height > y &&
+      rect.y < y + height
+    ) ids.push(layerId);          // Choose only the layers that are inside selecting rectangle
+  }
+
+  return ids;
 }

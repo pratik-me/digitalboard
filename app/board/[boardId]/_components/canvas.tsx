@@ -27,6 +27,7 @@ import {
 import CursorsPresence from "./cursors-presence";
 import {
   connectionIdColor,
+  findIntersectingLayerswithRectangle,
   pointerEventToCanvasPoint,
   resizeBounds,
 } from "@/lib/utils";
@@ -87,6 +88,21 @@ const Canvas = ({ boardId }: { boardId: string }) => {
       setMyPresence({ selection: [] }, { addToHistory: true });
   }, []);
 
+  const startMultiSelection = useCallback((current: Point, origin: Point) => {
+    if(Math.abs(current.x - origin.x) + Math.abs(current.y - origin.y) > 5) {
+      setCanvasState({mode: CanvasMode.SelectionNet, origin, current})
+    }
+  }, [])
+
+  const updateSelectionNet = useMutation(({storage, setMyPresence}, current: Point, origin: Point) => {
+    const layers = storage.get("layers").toJSON();
+    setCanvasState({mode: CanvasMode.SelectionNet, origin, current})
+
+    const ids = findIntersectingLayerswithRectangle(layerIds, layers, origin, current);
+    setMyPresence({selection: ids})
+  }, [])
+
+
   const resizeSelectedLayer = useMutation(
     ({ storage, self }, point: Point) => {
       if (canvasState.mode !== CanvasMode.Resizing) return;
@@ -131,7 +147,11 @@ const Canvas = ({ boardId }: { boardId: string }) => {
     ({ setMyPresence }, e: React.PointerEvent) => {
       e.preventDefault();
       const current = pointerEventToCanvasPoint(e, camera);
-      if (canvasState.mode === CanvasMode.Translating)
+      if(canvasState.mode === CanvasMode.Pressing)
+        startMultiSelection(current, canvasState.origin);
+      else if(canvasState.mode === CanvasMode.SelectionNet)
+        updateSelectionNet(current, canvasState.origin);
+      else if (canvasState.mode === CanvasMode.Translating)
         translateSelectedLayer(current);
       else if (canvasState.mode === CanvasMode.Resizing)
         resizeSelectedLayer(current);
