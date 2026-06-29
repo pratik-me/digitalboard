@@ -9,9 +9,7 @@ import {
   CanvasMode,
   CanvasState,
   Color,
-  Layer,
   LayerType,
-  PathLayer,
   Point,
   Side,
   XYHW,
@@ -22,10 +20,12 @@ import {
   useHistory,
   useMutation,
   useOthersMapped,
+  useSelf,
   useStorage,
 } from "@liveblocks/react/suspense";
 import CursorsPresence from "./cursors-presence";
 import {
+  colorToCss,
   connectionIdColor,
   findIntersectingLayerswithRectangle,
   penPointsToPathLayer,
@@ -38,9 +38,12 @@ import { LiveObject } from "@liveblocks/client";
 import { LayerPreview } from "./layer-preview";
 import { SelectionBox } from "./selection-box";
 import { SelectionTools } from "./selection-tools";
+import { Path } from "./Layers/path";
 
 const Canvas = ({ boardId }: { boardId: string }) => {
   const layerIds = useStorage((root) => root.layerIds);
+  const pencilDraft = useSelf((me) => me.presence.pencilDraft);
+
   const [camera, setCamera] = useState<Camera>({ x: 0, y: 0 });
   const [canvasState, setCanvasState] = useState<CanvasState>({
     mode: CanvasMode.None,
@@ -127,25 +130,35 @@ const Canvas = ({ boardId }: { boardId: string }) => {
     [canvasState]
   );
 
-  const insertPath = useMutation(({ storage, self, setMyPresence }) => {
-    const liveLayers = storage.get("layers");
-    const { pencilDraft } = self.presence;
+  const insertPath = useMutation(
+    ({ storage, self, setMyPresence }) => {
+      const liveLayers = storage.get("layers");
+      const { pencilDraft } = self.presence;
 
-    if(pencilDraft == null || pencilDraft.length < 2 || liveLayers.size >= MAX_LAYERS) {
-      setMyPresence({pencilDraft: null});
-      return;
-    }
+      if (
+        pencilDraft == null ||
+        pencilDraft.length < 2 ||
+        liveLayers.size >= MAX_LAYERS
+      ) {
+        setMyPresence({ pencilDraft: null });
+        return;
+      }
 
-    const id = nanoid();
+      const id = nanoid();
 
-    liveLayers.set(id, new LiveObject(penPointsToPathLayer(pencilDraft, lastUsedColor)));
+      liveLayers.set(
+        id,
+        new LiveObject(penPointsToPathLayer(pencilDraft, lastUsedColor))
+      );
 
-    const liveLayerIds = storage.get("layerIds");
-    liveLayerIds.push(id);
+      const liveLayerIds = storage.get("layerIds");
+      liveLayerIds.push(id);
 
-    setMyPresence({pencilDraft: null});
-    setCanvasState({mode: CanvasMode.Pencil})
-  }, [lastUsedColor]);
+      setMyPresence({ pencilDraft: null });
+      setCanvasState({ mode: CanvasMode.Pencil });
+    },
+    [lastUsedColor]
+  );
 
   const startDrawing = useMutation(
     ({ setMyPresence }, point: Point, pressure: number) => {
@@ -246,12 +259,19 @@ const Canvas = ({ boardId }: { boardId: string }) => {
         setCanvasState({ mode: CanvasMode.None });
       } else if (canvasState.mode === CanvasMode.Inserting)
         insertLayer(canvasState.layerType, point);
-      else if (canvasState.mode === CanvasMode.Pencil)
-        insertPath();
+      else if (canvasState.mode === CanvasMode.Pencil) insertPath();
       else setCanvasState({ mode: CanvasMode.None });
       history.resume();
     },
-    [camera, canvasState, history, setCanvasState, insertLayer, insertPath, unselectLayers]
+    [
+      camera,
+      canvasState,
+      history,
+      setCanvasState,
+      insertLayer,
+      insertPath,
+      unselectLayers,
+    ]
   );
 
   const onPointerDown = useCallback(
@@ -357,9 +377,17 @@ const Canvas = ({ boardId }: { boardId: string }) => {
                 y={Math.min(canvasState.origin.y, canvasState.current?.y)}
                 width={Math.abs(canvasState.origin.x - canvasState.current.x)}
                 height={Math.abs(canvasState.origin.y - canvasState.current.y)}
-              ></rect>
+              />
             )}
           <CursorsPresence />
+          {pencilDraft != null && pencilDraft.length > 0 && (
+            <Path
+              points={pencilDraft}
+              color={colorToCss(lastUsedColor)}
+              x={0}
+              y={0}
+            />
+          )}
         </g>
       </svg>
     </main>

@@ -3,11 +3,11 @@ import getStroke from "perfect-freehand";
 
 interface PathProps {
   points: number[][];
-  onPointerDown: (e: React.PointerEvent) => void;
-  stroke?: string;
   x: number;
   y: number;
   color: string;
+  onPointerDown?: (e: React.PointerEvent) => void;
+  stroke?: string;
 }
 
 export const Path = ({
